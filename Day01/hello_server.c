@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 	struct sockaddr_in clnt_addr;
 	socklen_t clnt_addr_size;
 
-	char message[] = "Hello World";
+	char message[] = "Hello World!";
 
 	if(argc!=2)
 	{
@@ -34,6 +34,9 @@ int main(int argc, char *argv[])
 
 	if(bind(serv_sock, (struct sockaddr*) &serv_addr, sizeof(serv_addr))==-1)
 		error_handling("bind() error");
+
+	if(listen(serv_sock, 5) == -1)
+		error_handling("listen() error!");
 
 	clnt_addr_size=sizeof(clnt_addr);
 	clnt_sock=accept(serv_sock, (struct sockaddr*)&clnt_addr, &clnt_addr_size);
