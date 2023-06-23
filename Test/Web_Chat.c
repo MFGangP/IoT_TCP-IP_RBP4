@@ -7,7 +7,7 @@
 #include <netinet/in.h>
 #include <pthread.h> // thread
 
-#define BUF_SIZE 500000
+#define BUF_SIZE 5000000
 #define MAX_CLNT 256
 
 char webpage[] = "HTTP/1.1 200 OK\r\n"
@@ -15,7 +15,7 @@ char webpage[] = "HTTP/1.1 200 OK\r\n"
 								"Content-Type: text/html; charset=UTF-8\r\n\r\n"
 								"<!DOCTYPE html>\r\n"
 								"<html><head><title> My Web Page </title>\r\n"
-								"<style>body {background-color: #FFF00 }</style></head>\r\n"
+								"<style>body {background-color: #FFFF00 }</style></head>\r\n"
 								"<body><center><h1>Hello world!!<h1><br>\r\n"
 								"<img src=\"img.jpg\"></center></body></html>\r\n";
 
@@ -51,13 +51,35 @@ int main(int argc, char *argv[])
 	if(listen(serv_sock, 5) == -1)
 		error_handling("listen() error!");
 
-	clnt_adr_size=sizeof(clnt_adr);
-	clnt_sock=accept(serv_sock, (struct sockaddr*)&clnt_adr, &clnt_adr_size);
-	if(clnt_sock==-1)
-		error_handling("accept() error");
 
-	write(clnt_sock, webpage, sizeof(webpage));
-	close(clnt_sock);
+	while(1)
+	{
+		clnt_adr_size=sizeof(clnt_adr);
+		clnt_sock=accept(serv_sock, (struct sockaddr*)&clnt_adr, &clnt_adr_size);
+
+		char buffer[BUF_SIZE];
+		memset(buffer, 0, BUF_SIZE);	
+
+  	if(clnt_sock==-1)
+			error_handling("accept() error");
+
+		read(clnt_sock, buffer, BUF_SIZE); 
+		puts(buffer);
+
+		if(strcmp(buffer, "/img.jpg")==0)
+		{
+			printf("사진 경로가 존재합니다.");
+			FILE* fd = fopen("img.jpg", "r");
+			send(clnt_sock, fd, sizeof(fd),0);
+			fclose(fd);
+		}
+		else
+		{
+			printf("사진이 없습니다.");
+			write(clnt_sock, webpage, sizeof(webpage)-1);
+		}
+		close(clnt_sock);
+	}
 	close(serv_sock);
 	return 0;
 }
@@ -68,4 +90,3 @@ void error_handling(char *message)
 	fputc('\n', stderr);
 	exit(1);
 }
-
