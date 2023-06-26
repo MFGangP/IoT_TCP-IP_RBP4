@@ -15,6 +15,8 @@
 	- UDP
 		- 비 연결지향형 소켓(SOCK_DGRAM)
 
+<img src="https://github.com/MFGangP/IoT_TCP-IP_RBP4/blob/main/image/Day01_hello_sv_clnt.png?raw=true" width="640">
+
 ## 2일차
 
 - 주소체계와 데이터 정렬
@@ -33,3 +35,13 @@
 - TCP 기반 서버/ 클라이언트 1		
 	- TCP, UDP에 대한 이해
 	- TCP기반 서버, 클라이언트 구현
+
+<img src="https://github.com/MFGangP/IoT_TCP-IP_RBP4/blob/main/image/Day02_hello_sv_clnt.png?raw=true" width="640">
+
+## 3일차
+
+<img src="https://github.com/MFGangP/IoT_TCP-IP_RBP4/blob/main/image/Day03_uecho_sv_clnt.png?raw=true" width="640">
+
+## 4일차
+
+<img src="https://github.com/MFGangP/IoT_TCP-IP_RBP4/blob/main/image/Day04_thread_wait.png?raw=true" width="640">
