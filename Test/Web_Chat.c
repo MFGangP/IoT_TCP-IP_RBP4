@@ -66,17 +66,17 @@ int main(int argc, char *argv[])
 		read(clnt_sock, buffer, BUF_SIZE); 
 		puts(buffer);
 
-		if(strcmp(buffer, "/img.jpg")==0)
+		if(strcmp(buffer, "img.jpg")==0)
 		{
 			printf("사진 경로가 존재합니다.");
-			FILE* fd = fopen("img.jpg", "r");
+			FILE* fd = fopen("img.png", "rb");
 			send(clnt_sock, fd, sizeof(fd),0);
 			fclose(fd);
 		}
 		else
 		{
 			printf("사진이 없습니다.");
-			write(clnt_sock, webpage, sizeof(webpage)-1);
+			write(clnt_sock, webpage, sizeof(webpage));
 		}
 		close(clnt_sock);
 	}
